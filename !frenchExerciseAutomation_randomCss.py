@@ -5,11 +5,11 @@ import pandas as pd
 from distutils.dir_util import copy_tree as cptr
 import fileinput
 
-hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
-css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
+#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
+#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
 
-#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
-#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
+hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
+css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
 
 
 tgtDirectoryName = parentDirectory = ""
