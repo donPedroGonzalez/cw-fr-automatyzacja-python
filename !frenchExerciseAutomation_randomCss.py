@@ -8,6 +8,10 @@ import fileinput
 hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
 css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
 
+#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
+#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
+
+
 tgtDirectoryName = parentDirectory = ""
 
 
@@ -102,6 +106,54 @@ for file in hf_files:
             #write exercice number
             with open('automatyzacja-python\\exerciceNumber.txt', 'w') as numRepoWrite:
                 numRepoWrite.write(str(exNumber))
+        if file.find("pytanie-odpowiedz") > -1:
+            df = pd.read_csv(os.path.join(hot_folder, file),
+                 delimiter=';',
+                 encoding='utf-8',
+                 header=0) 
+            
+            questionsString = "questions = [ "
+            answersString = "answers = [ "
+            hintsString = "hints = [ "
+
+            for array in df.values:
+                questionsString = questionsString + f'"{array[0]}", '
+                answersString = answersString + f'"{array[1]}", '
+                hintsString = hintsString + f'"{array[2]}", '
+
+            questionsString = finishJSArrayString(questionsString)
+            answersString = finishJSArrayString(answersString)
+            hintsString = finishJSArrayString(hintsString)
+
+            print(questionsString)
+            print(answersString)
+            print(hintsString)
+
+                        #check the exercice number
+            with open('automatyzacja-python\\exerciceNumber.txt') as numRepoRead:
+                exNumber = int(numRepoRead.read()) + 1
+
+            #create the target folder
+            tgtDirectoryName = "pytanie-odpowiedz-cw" + str(exNumber)
+            os.mkdir(tgtDirectoryName)
+            parentDirectory = os.path.abspath(os.getcwd())
+            #copy files from src folder to tgt folder
+            cptr(os.path.join(parentDirectory, 'pytanie-odpowiedz'), tgtDirectoryName)
+
+            #modify the missing-element.js
+            with open(os.path.join(tgtDirectoryName, "pytanie-odpowiedz.js"), 'r', encoding='utf-8') as jsf:
+                content = jsf.read()
+                content = content.replace("questions = []", questionsString)
+                content = content.replace("answers = []", answersString)
+                content = content.replace("hints = []", hintsString)
+
+            with open(os.path.join(tgtDirectoryName, "missing-element.js"), 'w', encoding='utf-8') as jsfw:
+                 jsfw.write(content)
+                           
+            #write exercice number
+            with open('automatyzacja-python\\exerciceNumber.txt', 'w') as numRepoWrite:
+                numRepoWrite.write(str(exNumber))
+
 
 #Picking the name of the css file to be used in this exercice
 cssToBeUsed = pickTheNextDesign(r"D:\02_NAUKA\STRONA-CWICZENIA-FRANCUSKIE\VERIFIED_2022-10-10_2\missing-element\dist")
