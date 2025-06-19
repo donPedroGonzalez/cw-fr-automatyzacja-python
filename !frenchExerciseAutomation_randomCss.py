@@ -8,22 +8,33 @@ import fileinput
 hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
 css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
 
+tgtDirectoryName = parentDirectory = ""
+
+
 #working methods
 def finishJSArrayString(string):
     pattern = r"\,\s$"
     return re.sub(pattern, " ]", string)
 
-def pickRandomDesign(path):
+def pickTheNextDesign(path):
     css_files = os.listdir(path)
     cssToUse = 0
     with open("D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\automatyzacja-python\\cssUsed.txt") as cssMemory:
         lastCssUsed = int(cssMemory.read())
-    if lastCssUsed < css_files.count:
+    print("lastCssUsed --", lastCssUsed)
+    print("len(css_files) --", len(css_files))
+    if lastCssUsed + 1 < len(css_files):
         cssToUse = lastCssUsed + 1    
+    else:
+        cssToUse = 0
+    
     with open("D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\automatyzacja-python\\cssUsed.txt", "w") as cssMemory:
         cssMemory.write(str(cssToUse))
+    
+    print("cssToUse -- ", cssToUse)
     print("dist\\" + css_files[cssToUse])
     return "dist\\" + css_files[cssToUse]
+
 
 #The csv file to be processed should have a specific file name structure and should be utf-8 encoded.
 #<exercice-type>_otherContent.csv
@@ -91,5 +102,27 @@ for file in hf_files:
             #write exercice number
             with open('automatyzacja-python\\exerciceNumber.txt', 'w') as numRepoWrite:
                 numRepoWrite.write(str(exNumber))
+
+#Picking the name of the css file to be used in this exercice
+cssToBeUsed = pickTheNextDesign(r"D:\02_NAUKA\STRONA-CWICZENIA-FRANCUSKIE\VERIFIED_2022-10-10_2\missing-element\dist")
+cssHrefString = f'href="{cssToBeUsed}"'
+
+#Writing the reference to the css file in the index.html
+with open(os.path.join(tgtDirectoryName, 'index.html'), 'r', encoding='utf-8') as indexHtmlr:
+    content = indexHtmlr.read()
+    content = content.replace('href="<css-to-be-used>"', cssHrefString)
+
+with open(os.path.join(tgtDirectoryName, 'index.html'), 'w', encoding='utf-8') as indexHtmlw:
+    indexHtmlw.write(content)
+
+#creating the list of css files to then delete those that are not used in the index.html
+distFiles = os.listdir(os.path.join(tgtDirectoryName, "dist"))
+
+for file in distFiles:
+    if "dist\\" + file != cssToBeUsed:
+        os.remove(os.path.join(tgtDirectoryName, "dist", file))
+        print(f"{file} has been deleted")
+    else:
+        print(f"{file} IS KEPT")
 
 print("Done!")
