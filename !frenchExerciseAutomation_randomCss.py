@@ -3,13 +3,14 @@ import os
 import math
 import pandas as pd
 from distutils.dir_util import copy_tree as cptr
+from distutils.dir_util import remove_tree as rmtr
 import fileinput
 
-#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
-#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
+hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
+css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
 
-hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
-css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
+#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
+#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
 
 
 tgtDirectoryName = parentDirectory = ""
@@ -92,6 +93,18 @@ for file in hf_files:
             parentDirectory = os.path.abspath(os.getcwd())
             #copy files from src folder to tgt folder
             cptr(os.path.join(parentDirectory, 'missing-element'), tgtDirectoryName)
+            #deleting the .git directory of the parent folder and all of its content from the newly created exercice folder
+            git_path = os.path.join(tgtDirectoryName, ".git")
+            for fileName in os.listdir(git_path):
+                file_path = os.path.join(git_path, fileName)
+                
+                #Check if it's a file (not a subdirectory)
+                if os.path.isfile(file_path):
+                    os.remove(file_path) #Remove the file
+                    print(f"Deleted file: {fileName}")
+            #removing the directory
+            rmtr(git_path)
+
             #modify the missing-element.js
             with open(os.path.join(tgtDirectoryName, "missing-element.js"), 'r', encoding='utf-8') as jsf:
                 content = jsf.read()
@@ -139,6 +152,17 @@ for file in hf_files:
             parentDirectory = os.path.abspath(os.getcwd())
             #copy files from src folder to tgt folder
             cptr(os.path.join(parentDirectory, 'pytanie-odpowiedz'), tgtDirectoryName)
+            #deleting the .git directory of the parent folder and all of its content from the newly created exercice folder
+            git_path = os.path.join(tgtDirectoryName, ".git")
+            for fileName in os.listdir(git_path):
+                file_path = os.path.join(git_path, fileName)
+                
+                #Check if it's a file (not a subdirectory)
+                if os.path.isfile(file_path):
+                    os.remove(file_path) #Remove the file
+                    print(f"Deleted file: {fileName}")
+            #removing the directory
+            rmtr(git_path)
 
             #modify the missing-element.js
             with open(os.path.join(tgtDirectoryName, "pytanie-odpowiedz.js"), 'r', encoding='utf-8') as jsf:
