@@ -256,17 +256,22 @@ for file in hf_files:
             # Build JavaScript object array for sentences
             sentenceItems = []
             for index, array in enumerate(df.values):
-                # Assuming CSV columns: scrambled_words;correct_order;hint
-                # Split the scrambled and correct words by comma or space
-                scrambled_words = [f'"{word.strip()}"' for word in array[0].split(',')]
-                correct_words = [f'"{word.strip()}"' for word in array[1].split(',')]
+                if index == 0:
+                    # Assuming the first non-header row has: premiere_consigne;footer_cat_info
+                    premiere_consigne_string = array[0]
+                    footer_cat_info_string = array[1]
+                else:
+                    # Assuming CSV columns: scrambled_words;correct_order;hint
+                    # Split the scrambled and correct words by comma or space
+                    scrambled_words = [f'"{word.strip()}"' for word in array[0].split('--')]
+                    correct_words = [f'"{word.strip()}"' for word in array[1].split('--')]
                 
-                item = f'''{{
-                    scrambled: [{', '.join(scrambled_words)}],
-                    correct: [{', '.join(correct_words)}],
-                    hint: "{array[2]}"
-                }}'''
-                sentenceItems.append(item)
+                    item = f'''{{
+                        scrambled: [{', '.join(scrambled_words)}],
+                        correct: [{', '.join(correct_words)}],
+                        hint: "{array[2]}"
+                    }}'''
+                    sentenceItems.append(item)
             
             sentencesString = "sentences = " + createJSObjectArray(sentenceItems) + ";"
             
