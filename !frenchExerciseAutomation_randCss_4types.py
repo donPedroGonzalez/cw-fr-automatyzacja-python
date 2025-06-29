@@ -7,11 +7,11 @@ from distutils.dir_util import remove_tree as rmtr
 #import fileinput
 
 # Configuration paths - update these to match your structure
-hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\matching-exercise\\hot_folder"
-css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\matching-exercise\\dist"
+#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\matching-exercise\\hot_folder"
+#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\matching-exercise\\dist"
 
-#hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
-#css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
+hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\hot_folder"
+css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\missing-element\\dist"
 
 #hot_folder = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\hot_folder"
 #css_path = "D:\\02_NAUKA\\STRONA-CWICZENIA-FRANCUSKIE\\VERIFIED_2022-10-10_2\\pytanie-odpowiedz\\dist"
@@ -149,9 +149,9 @@ for file in hf_files:
             hintsString = "hints = [ "
 
             for array in df.values:
-                questionsString = questionsString + f"'{array[0]}', "
-                answersString = answersString + f"'{array[1]}', "
-                hintsString = hintsString + f"'{array[2]}', "
+                questionsString = questionsString + f'"{array[0]}", '
+                answersString = answersString + f'"{array[1]}", '
+                hintsString = hintsString + f'"{array[2]}", '
 
             questionsString = finishJSArrayString(questionsString)
             answersString = finishJSArrayString(answersString)
